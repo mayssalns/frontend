@@ -1,16 +1,15 @@
 import React from 'react';
 import {
-    Button,
     Container,
-    Image,
     Row,
     Col,
     Table,
     Navbar,
-    Nav
-} from 'react-bootstrap'
+    Nav,
+    NavDropdown
+} from 'react-bootstrap';
 
-class AuthorList extends React.Component{
+export default class AuthorDetails extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -20,13 +19,23 @@ class AuthorList extends React.Component{
         };
     }
     componentDidMount() {
-        fetch("http://localhost:8000/v1/author/")
+        let author_id = this.props.match.params.id;
+        let string_name = this.props.match.params.name;
+        let string = '';
+        if (author_id === null){
+            string = `http://localhost:8000/v1/author/?name=${string_name}`;
+        }
+        else {
+            string = `http://localhost:8000/v1/author/${author_id}`;
+        }
+
+        fetch(string)
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result.results
+                        items: result
                     });
                 },
                 (error) => {
@@ -36,7 +45,6 @@ class AuthorList extends React.Component{
                     });
                 }
             )
-
     }
 
     render() {
@@ -49,13 +57,21 @@ class AuthorList extends React.Component{
             return (
                 <div>
                     <div>
-                        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                            <Navbar.Brand href="/">Home</Navbar.Brand>
+                        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                            <Navbar.Brand href="/">HOME</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
-                                <Nav className="mr-auto">
-                                    <Nav.Link href="/new/author">Novo</Nav.Link>
-                                    <Nav.Link href="/Book">Book</Nav.Link>
+                                    <Nav className="mr-auto">
+                                        <NavDropdown title="Author" id="nav_author">
+                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
+                                    </NavDropdown>
+                                    <NavDropdown title="Book" id="nav_book">
+                                        <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
+                                    </NavDropdown>
+                                   
+                                    
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -64,7 +80,7 @@ class AuthorList extends React.Component{
                         <Container>
                             <Row className={"justify-content-center"}>
                                 <Col  xs={6} md={4}>
-                                <h1>Listing Author</h1>
+                                    <h1>Author Details</h1>
                                 </Col>
                             </Row>
                         </Container>
@@ -73,20 +89,14 @@ class AuthorList extends React.Component{
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th colSpan={4}>Opções</th>
+                                        <th>NAME</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {items.map(item => (
-                                        <tr key={item.name}>
-                                            <td>{item.id}</td>
-                                            <td>{item.name}</td>
-                                            <td><Button variant={"secondary"} size="lg" block>Alterar</Button></td>
-                                            <td><Button variant={"secondary"} href={`/del/author/${item.id}`} size="lg" block>Excluir</Button></td>
-                                            <td><Button variant={"secondary"} href={`/author/${item.id}`} size="lg" block>Detalhes</Button></td>
-                                        </tr>
-                                    ))}
+                                    <tr key={items.name}>
+                                        <td>{items.id}</td>
+                                        <td>{items.name}</td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         </Container>
@@ -96,4 +106,3 @@ class AuthorList extends React.Component{
         }
     }
 }
-export default AuthorList;

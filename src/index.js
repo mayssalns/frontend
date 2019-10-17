@@ -3,36 +3,33 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import AuthorList from "./Author/Author-list";
-import Author from "./Author/Author";
-import AuthorNew from "./Author/Author-new";
-import AuthorRemove from "./Author/Author-remove";
-import Booklist from "./Book/Book-list";
-import BookNew from "./Book/Book-new";
-import Book from "./Book/Book";
-import BookRemove from "./Book/Book-remove";
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import AuthorList from "./author/author-list";
+import BookList from "./book/book-list";
+import AuthorAdd from "./author/author-add";
+import AuthorDelete from "./author/author-delete";
+import BookAdd from "./book/book-add";
+import BookDelete from "./book/book-delete";
+import BookDetails from './book/book-details';
+import AuthorDetails from './author/author-details';
+
 
 
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
+            <Route path="/book" exact={true} component={BookList} />
+            <Route path="/add/book" exact={true} component={BookAdd} />
+            <Route path="/book/:id" exact={true} component={BookDetails} />
+            <Route path="/book/?name=:name" exact={false} component={BookDetails} />
+            <Route path="/del/book/:id" exact={true} component={BookDelete} />
             <Route path="/" exact={true} component={App} />
             <Route path="/author" exact={true} component={AuthorList} />
-            <Route path="/author/:id" exact={true} component={Author} />
-            <Route path="/author/?name=:name" exact={true} component={Author} />
-            <Route path="/new/Author" exact={true} component={AuthorNew} />
-            <Route path="/del/Author/:id" exact={true} component={AuthorRemove} />
-            <Route path="/Book" exact={true} component={Booklist} />
-            <Route path="/new/Book" exact={true} component={BookNew} />
-            <Route path="/book/:id" exact={true} component={Book} />
-            <Route path="/book/?name=:name" exact={true} component={Book} />
-            <Route path="/del/Book/:id" exact={true} component={BookRemove} />
+            <Route path="/author/:id" exact={true} component={AuthorDetails} />
+            <Route path="/author/?name=:name" exact={false} component={AuthorDetails} />
+            <Route path="/add/author" exact={true} component={AuthorAdd} />
+            <Route path="/del/author/:id" exact={true} component={AuthorDelete} />
         </Switch>
     </BrowserRouter>,
-    document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+    document.getElementById('root')); 
 serviceWorker.unregister();

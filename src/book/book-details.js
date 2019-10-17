@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-    Button,
     Container,
-    Image,
     Row,
     Col,
     Table,
@@ -11,7 +9,7 @@ import {
     NavDropdown
 } from 'react-bootstrap';
 
-class Author extends React.Component{
+export default class BookDetails extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -20,17 +18,17 @@ class Author extends React.Component{
             items: []
         };
     }
+
     componentDidMount() {
-        let author_id = this.props.match.params.id;
+        let book_id = this.props.match.params.id;
         let string_name = this.props.match.params.name;
         let string = '';
-        if (author_id === null){
-            string = `http://localhost:8000/v1/author/?name=${string_name}`;
+        if (book_id === null){
+            string = `http://localhost:8000/v1/book/?name=${string_name}`;
         }
         else {
-            string = `http://localhost:8000/v1/author/${author_id}`;
+            string = `http://localhost:8000/v1/book/${book_id}`;
         }
-
         fetch(string)
             .then(res => res.json())
             .then(
@@ -59,19 +57,20 @@ class Author extends React.Component{
             return (
                 <div>
                     <div>
-                        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                            <Navbar.Brand href="/">Home</Navbar.Brand>
+                        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                            <Navbar.Brand href="/">HOME</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
+                                <NavDropdown title="Book" id="nav_book">
+                                <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
+                                <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
+                                     </NavDropdown>
                                     <NavDropdown title="Author" id="nav_author">
-                                        <NavDropdown.Item href="/new/author">New</NavDropdown.Item>
-                                        <NavDropdown.Item href="/author">List</NavDropdown.Item>
+                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
                                     </NavDropdown>
-                                    <NavDropdown title="Book" id="nav_book">
-                                        <NavDropdown.Item href="/new/book">New</NavDropdown.Item>
-                                        <NavDropdown.Item href="/book">List</NavDropdown.Item>
-                                    </NavDropdown>
+                                 
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -80,26 +79,27 @@ class Author extends React.Component{
                         <Container>
                             <Row className={"justify-content-center"}>
                                 <Col  xs={6} md={4}>
-                                    <h1>Author</h1>
+                                    <h1>Book Details</h1>
                                 </Col>
                             </Row>
                         </Container>
                         <Container>
                             <Table striped bordered hover>
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th colSpan={3}>Opções</th>
-                                    </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>NAME</th>
+                                    <th>SUMMARY</th>
+                                    <th>AUTHOR</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr key={items.name}>
-                                        <td>{items.id}</td>
-                                        <td>{items.name}</td>
-                                        <td><Button variant={"secondary"} size="lg" block>Alterar</Button></td>
-                                        <td><Button variant={"secondary"} href={`/del/author/${items.id}`} size="lg" block>Excluir</Button></td>
-                                    </tr>
+                                <tr key={items.name}>
+                                    <td>{items.id}</td>
+                                    <td>{items.name}</td>
+                                    <td>{items.summary}</td>
+                                    <td>{items.author}</td>
+                                </tr>
                                 </tbody>
                             </Table>
                         </Container>
@@ -109,4 +109,4 @@ class Author extends React.Component{
         }
     }
 }
-export default Author;
+

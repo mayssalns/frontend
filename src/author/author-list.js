@@ -1,8 +1,7 @@
 import React from 'react';
-import {Button, Container, Image, Row, Col, Table, Navbar, Nav} from 'react-bootstrap'
+import { Button, Container, Row, Col,Table, Navbar, Nav } from 'react-bootstrap'
 
-
-class Booklist extends React.Component{
+export default class AuthorList extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +11,7 @@ class Booklist extends React.Component{
         };
     }
     componentDidMount() {
-        fetch("http://localhost:8000/v1/book/")
+        fetch("http://localhost:8000/v1/author/")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -28,6 +27,7 @@ class Booklist extends React.Component{
                     });
                 }
             )
+
     }
 
     render() {
@@ -40,13 +40,13 @@ class Booklist extends React.Component{
             return (
                 <div>
                     <div>
-                        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                             <Navbar.Brand href="/">Home</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
-                                    <Nav.Link href="/new/book">Novo</Nav.Link>
-                                    <Nav.Link href="/Author">Author</Nav.Link>
+                                    <Nav.Link href="/add/author">Novo</Nav.Link>
+                                    <Nav.Link href="/Book">Book</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -55,7 +55,7 @@ class Booklist extends React.Component{
                         <Container>
                             <Row className={"justify-content-center"}>
                                 <Col  xs={6} md={4}>
-                                    <h1>Listing Book</h1>
+                                <h1>Listing Author</h1>
                                 </Col>
                             </Row>
                         </Container>
@@ -63,22 +63,18 @@ class Booklist extends React.Component{
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Summary</th>
-                                        <th colSpan={3}>Opções</th>
+                                        <th>ID</th>
+                                        <th>NAME</th>
+               
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {items.map(item => (
-                                        <tr key={item.id}>
+                                        <tr key={item.name}>
                                             <td>{item.id}</td>
                                             <td>{item.name}</td>
-                                            <td>{item.summary}</td>
-                                            <td><Button variant={"secondary"} size="lg" block>Alterar</Button></td>
-                                            <td><Button variant={"secondary"} href={`/del/book/${item.id}`} size="lg" block>Excluir</Button></td>
-                                            <td><Button variant={"secondary"} href={`/book/${item.id}`} size="lg" block>Detalhes</Button></td>
-
+                                            <td><Button variant={"primary"} href={`/del/author/${item.id}`} size="lg" block>DELETE</Button></td>
+                                            <td><Button variant={"primary"} href={`/author/${item.id}`} size="lg" block>DETAILS</Button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -86,10 +82,8 @@ class Booklist extends React.Component{
                         </Container>
                     </div>
                 </div>
-
             );
         }
     }
-
 }
-export default Booklist;
+

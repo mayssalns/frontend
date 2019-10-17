@@ -5,7 +5,6 @@ import {
     InputGroup,
     FormControl,
     Container,
-    Image,
     Row,
     Col,
     Nav,
@@ -34,7 +33,7 @@ class AuthorNew extends React.Component{
     render() {
         return (
             <div>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                     <Navbar.Brand href="/">Home</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -66,7 +65,7 @@ class AuthorNew extends React.Component{
                                     aria-describedby="name"
                                 />
                             </InputGroup>
-                            <Button variant={"secondary"} type="submit" size="lg" block>Enviar</Button>
+                            <Button variant={"primary"} type="submit" size="lg" block>Enviar</Button>
                         </Form>
                     </Container>
                 </div>
