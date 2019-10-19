@@ -1,42 +1,59 @@
 import React from 'react';
-import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { Container, Row, Col, Navbar, Nav, Button, Table } from 'react-bootstrap';
 import axios from "axios";
+import InfiniteScroll from "react-infinite-scroller";
+ 
 
 export default class BookList extends React.Component{
-   
-    state = {
-        breweries: [],
-        pageNumber: 1,
-        items: 5,
-        hasMore: true
-      };
+   constructor (props) {
+    super (props);
+    this.state = {
+      listItems: [],
+      pageNumber: 1,
+      items: 5,
+      hasMore: true
+    }
+    this.loadMore = this.loadMore.bind(this);
+
+   }
     
-      componentDidMount() {
-          //initial request is sent
-        this.fetchData();
-      }
-      
-                
-      fetchData = () => {
-        axios
-          .get(
-            `http://localhost:8000/v1/book/?page=${
-              this.state.pageNumber
-            }&per_page=${this.state.items}`
-          )
-          //.then(res => res.json())
-          .then(res =>
-            this.setState({
-              //updating data
-              breweries: [...this.state.breweries, ...res.data],
-              //updating page numbers
-              pageNumber: this.state.pageNumber + 1
+   componentDidMount() {
+    //initial request is sent
+    this.loadMore();
+    setTimeout(() => this.loadMore(), 4000)
+    // onscroll (() => this.loadMore, true)
+   }
+
+    loadMore = () => {
+    axios
+        .get(
+        `http://localhost:8000/v1/book/?page=${
+            this.state.pageNumber}&per_page=${this.state.items}`
+        )
+        
+        //.then(res => res.json())
+        .then(response => {
+
+            console.log('RESPONSE:', response.data.results)
+
+            this.setState( prevState => {
+                return {
+                    ...prevState,
+                    pageNumber: prevState.pageNumber + 1,
+                    listItems: prevState.listItems.concat(response.data.results)
+                }
             })
-          );
-      };
+
+            console.log("RESPONSE: ", this.state)
+
+        },
+        )
+        .catch(() => { console.log('Error')});
+
+    };
+
     
-      render() {
+  render() {
         return (
             <div>
                     <div>
@@ -45,8 +62,8 @@ export default class BookList extends React.Component{
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
-                                    <Nav.Link href="/add/author">Novo</Nav.Link>
-                                    <Nav.Link href="/Book">Book</Nav.Link>
+                                    <Nav.Link href="/add/book">Insert</Nav.Link>
+                                    <Nav.Link href="/author">Authors</Nav.Link>
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -55,24 +72,45 @@ export default class BookList extends React.Component{
                         <Container>
                             <Row className={"justify-content-center"}>
                                 <Col  xs={6} md={4}>
-                                <h1>Listing Author</h1>
+                                <h1>Listing Books</h1>
                                 </Col>
                             </Row>
                         </Container>
+
                         <Container>
-                            <InfiniteScroll
-                                dataLength={this.state.breweries.length} //This is important field to render the next data
-                                next={this.fetchData}
-                                hasMore={this.state.hasMore}
-                                loader={<h4>Loading...</h4>}
-                            >
-                            {this.state.breweries.map(brewery => (
-                            <ul className="user" key={brewery.id}>
-                                <li>Name: {brewery.name}</li>
-                            </ul>
-                             ))}
-                      </InfiniteScroll>
-                        </Container>
+                            <div style={{height:'600px', overflow:'auto'}}>
+                                <InfiniteScroll
+                                    loadMore={this.loadMore.bind(this)}
+                                    hasMore={this.state.hasMoreItems}
+                                    loader={<div className="loader"> Loading... </div>}
+                                    useWindow={false}
+                                >
+                                    <Table responsive="sm">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>NAME</th>
+                                                <th>SUMMARY</th>
+                                                <th>AUTHOR</th>
+                                                <th>MORE</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {this.state.listItems.map(item => (
+                                                <tr key={item.id}>
+                                                    <td>{item.id}</td>
+                                                    <td>{item.name}</td>
+                                                    <td>{item.summary}</td>
+                                                    <td>{item.author}</td>
+                                                    <td><Button variant={"link"} href={`/book/${item.id}`} size="lg" block>Details</Button></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </InfiniteScroll>
+                            </div>
+                        </Container>                
                     </div>
                 </div>
         );

@@ -66,9 +66,9 @@ export default class AuthorDetails extends React.Component{
                                         <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
                                         <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
                                     </NavDropdown>
-                                    <NavDropdown title="Book" id="nav_book">
-                                        <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
-                                        <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
+                                    <NavDropdown title="author" id="nav_author">
+                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
                                     </NavDropdown>
                                    
                                     

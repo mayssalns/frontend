@@ -12,10 +12,10 @@ import {
 } from 'react-bootstrap';
 
 
-class AuthorNew extends React.Component{
+export default class AuthorAdd extends React.Component{
     constructor() {
         super();
-        AuthorNew.handleSubmit = AuthorNew.handleSubmit.bind(this);
+        AuthorAdd.handleSubmit = AuthorAdd.handleSubmit.bind(this);
     }
 
     static handleSubmit(event) {
@@ -38,8 +38,8 @@ class AuthorNew extends React.Component{
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="/author">Author</Nav.Link>
-                            <Nav.Link href="/book">Book</Nav.Link>
+                            <Nav.Link href="/author">AUTHOR</Nav.Link>
+                            <Nav.Link href="/book">BOOK</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -47,12 +47,12 @@ class AuthorNew extends React.Component{
                     <Container>
                         <Row className={"justify-content-center"}>
                             <Col  xs={6} md={4}>
-                                <h1>Book Add</h1>
+                                <h1>Author Add</h1>
                             </Col>
                         </Row>
                     </Container>
                     <Container>
-                        <Form id={"Author-form"} onSubmit={AuthorNew.handleSubmit}>
+                        <Form id={"Author-form"} onSubmit={AuthorAdd.handleSubmit}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
                                     <InputGroup.Text >Name</InputGroup.Text>
@@ -65,7 +65,7 @@ class AuthorNew extends React.Component{
                                     aria-describedby="name"
                                 />
                             </InputGroup>
-                            <Button variant={"primary"} type="submit" size="lg" block>Enviar</Button>
+                            <Button variant={"primary"} type="submit" size="lg" block>Submit</Button>
                         </Form>
                     </Container>
                 </div>
@@ -73,4 +73,4 @@ class AuthorNew extends React.Component{
         );
     }
 }
-export default AuthorNew;
+

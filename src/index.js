@@ -4,12 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import AuthorList from "./author/author-list";
-import BookList from "./book/book-list";
-import AuthorAdd from "./author/author-add";
-import AuthorDelete from "./author/author-delete";
-import BookAdd from "./book/book-add";
-import BookDelete from "./book/book-delete";
+import AuthorList from './author/author-list';
+import BookList from './book/book-list';
+import AuthorAdd from './author/author-add';
+import AuthorDelete from './author/author-delete';
+import BookAdd from './book/book-add';
+import BookDelete from './book/book-delete';
 import BookDetails from './book/book-details';
 import AuthorDetails from './author/author-details';
 
@@ -31,5 +31,6 @@ ReactDOM.render(
             <Route path="/del/author/:id" exact={true} component={AuthorDelete} />
         </Switch>
     </BrowserRouter>,
-    document.getElementById('root')); 
+    document.getElementById('root')
+); 
 serviceWorker.unregister();

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, Container,  Row, Col, Nav, Navbar} from 'react-bootstrap'
+import {Form, Button, Container,  Row, Col, Nav, Navbar, InputGroup, FormControl, FormGroup} from 'react-bootstrap'
 
 
 
@@ -75,38 +75,45 @@ export default class BookAdd extends React.Component {
                             </Row>
                         </Container>
                         <Container>
-
                         <Form id={"book-form"} onSubmit={BookAdd.handleSubmit}>
-                        <Form.Group controlId="Form.ControlInput1">
-                          <Form.Label>Name</Form.Label>
-                          <Form.Control 
-                          name={"name"}
-                          id={"name"}
-                          placeholder="Book Name"
-                          aria-label="name"
-                          aria-describedby="name"
-                          />
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>Name</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        name={"name"}
+                                        id={"name"}
+                                        placeholder="Book Name"
+                                        aria-label="name"
+                                        aria-describedby="name"
+                                    />
+                                </InputGroup>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text>Summary</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        name={"summary"}
+                                        id={"summary"}
+                                        placeholder="Book summary"
+                                        aria-label="name"
+                                        aria-describedby="name"
+                                    />
+                                </InputGroup>
+                                <FormGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text style={{flex: 3}}>Authors</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <select multiple className="form-control" id="author" name="author">
+                                        {items.map(item => (
+                                            <option key={item.id} value={item.id}>{item.name}</option>
+                                        ))}
+                                    </select>
+                                </FormGroup>
+                                <Button variant={"primary"} type="submit" size="lg" block>Submit</Button>
+                            </Form>
 
-                          <Form.Label>Summary</Form.Label>
-                          <Form.Control 
-                          name={"summary"}
-                          id={"summary"}
-                          placeholder="Book Summary"
-                          aria-label="name"
-                          aria-describedby="name"
-                          />
-                          <Form.Label>Author</Form.Label>
-                          <select multiple className="form-control" id="author" name="author">
-                          {items.map(item => (
-                              <option key={item.id} value={item.id}>{item.name}</option>
-                          ))}
-                          </select>
-                          
-                        </Form.Group>
-                     
-                        <Button variant={"primary"} type="submit" size="lg" block>Submit</Button>
-                      </Form>
-                        
+                       
                         </Container>
                     </div>
                 </div>

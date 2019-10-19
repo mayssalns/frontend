@@ -62,13 +62,13 @@ export default class BookDetails extends React.Component{
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                 <Nav className="mr-auto">
-                                <NavDropdown title="Book" id="nav_book">
+                                <NavDropdown title="book" id="nav_book">
                                 <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
                                 <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
                                      </NavDropdown>
-                                    <NavDropdown title="Author" id="nav_author">
-                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
-                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
+                                    <NavDropdown title="book" id="nav_book">
+                                        <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
                                     </NavDropdown>
                                  
                                 </Nav>
