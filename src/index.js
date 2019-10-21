@@ -18,17 +18,23 @@ import AuthorDetails from './author/author-details';
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
+
+
+            <Route path="/" exact={true} component={App} />
+
             <Route path="/book" exact={true} component={BookList} />
             <Route path="/add/book" exact={true} component={BookAdd} />
             <Route path="/book/:id" exact={true} component={BookDetails} />
-            <Route path="/book/?name=:name" exact={false} component={BookDetails} />
             <Route path="/del/book/:id" exact={true} component={BookDelete} />
-            <Route path="/" exact={true} component={App} />
+            <Route path="/book/search/:name" exact={false} component={BookDetails} />
+
+          
+            <Route path="/author/search/:name" exact={false} component={AuthorDetails} />
             <Route path="/author" exact={true} component={AuthorList} />
             <Route path="/author/:id" exact={true} component={AuthorDetails} />
-            <Route path="/author/?name=:name" exact={false} component={AuthorDetails} />
             <Route path="/add/author" exact={true} component={AuthorAdd} />
             <Route path="/del/author/:id" exact={true} component={AuthorDelete} />
+
         </Switch>
     </BrowserRouter>,
     document.getElementById('root')

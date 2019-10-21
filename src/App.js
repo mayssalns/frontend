@@ -20,16 +20,21 @@ export default class App extends React.Component{
     this.state = {name: ''};
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({name: event.target.value});
   }
 
-  render() {
-    const { name } = this.state;
 
-    const enabled = name.length > 0;
+  handleSubmit = event => {
+    event.preventDefault();
+  };
+
+
+  render() {
+
     return (
         <div>
           <div>
@@ -61,9 +66,9 @@ export default class App extends React.Component{
 
           <div>
             <Container>
-              <InputGroup>
-                <FormControl
-                    placeholder="Search"
+              <InputGroup >
+              <FormControl
+                    autoFocus
                     aria-describedby="basic-addon2"
                     size={"lg"}
                     value={this.state.name}
@@ -74,12 +79,13 @@ export default class App extends React.Component{
 
                 <DropdownButton
                     as={InputGroup.Append}
-                    variant="outline-primary"
+                    variant="primary"
                     title="Go"
                     id="igd"
                 >
-                  <Dropdown.Item href={`/author/?name=${this.state.name}`} disabled={!enabled}>Author</Dropdown.Item>
-                  <Dropdown.Item href={`/book/?name=${this.state.name}`} disabled={!enabled}>Book</Dropdown.Item>
+                  <Dropdown.Item href={`/author/search/${this.state.name}`} >Author</Dropdown.Item>
+                  <Dropdown.Item href={`/book/search/${this.state.name}`}>Book</Dropdown.Item>
+
                 </DropdownButton>
               </InputGroup>
             </Container>

@@ -110,7 +110,7 @@ export default class BookAdd extends React.Component {
                                         ))}
                                     </select>
                                 </FormGroup>
-                                <Button variant={"primary"} type="submit" size="lg" block>Submit</Button>
+                                <Button variant={"primary"} type="submit">Submit</Button>
                             </Form>
 
                        

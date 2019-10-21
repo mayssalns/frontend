@@ -1,12 +1,12 @@
 import React from 'react';
-import {
-    Container,
+import {  Container,
     Row,
     Col,
     Table,
     Navbar,
     Nav,
-    NavDropdown
+    NavDropdown,
+    Button
 } from 'react-bootstrap';
 
 export default class BookDetails extends React.Component{
@@ -18,19 +18,26 @@ export default class BookDetails extends React.Component{
             items: []
         };
     }
-
     componentDidMount() {
+        this.getBookDetails();
+
+    }
+
+    getBookDetails = () => {        
         let book_id = this.props.match.params.id;
-        let string_name = this.props.match.params.name;
-        let string = '';
-        if (book_id === null){
-            string = `http://localhost:8000/v1/book/?name=${string_name}`;
+        let str_name = this.props.match.params.name;
+        let str = '';
+
+        if (book_id === undefined){
+            str = `http://localhost:8000/v1/book/?name=${str_name}`
         }
         else {
-            string = `http://localhost:8000/v1/book/${book_id}`;
+            str = `http://localhost:8000/v1/book/${book_id}`;
+            this.isBook = true;
         }
-        fetch(string)
-            .then(res => res.json())
+
+        fetch(str)
+            .then(response => response.json())
             .then(
                 (result) => {
                     this.setState({
@@ -45,7 +52,9 @@ export default class BookDetails extends React.Component{
                     });
                 }
             )
+            .catch(() => { console.log('Error')});
     }
+
 
     render() {
         const { error, isLoaded, items } = this.state;
@@ -61,16 +70,17 @@ export default class BookDetails extends React.Component{
                             <Navbar.Brand href="/">HOME</Navbar.Brand>
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
-                                <Nav className="mr-auto">
-                                <NavDropdown title="book" id="nav_book">
-                                <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
-                                <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
-                                     </NavDropdown>
-                                    <NavDropdown title="book" id="nav_book">
+                                    <Nav className="mr-auto">
+                                        <NavDropdown title="BOOK" id="nav_author">
                                         <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
                                         <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
                                     </NavDropdown>
-                                 
+                                    <NavDropdown title="AUTHOR" id="nav_author">
+                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
+                                    </NavDropdown>
+                                   
+                                    
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -83,30 +93,49 @@ export default class BookDetails extends React.Component{
                                 </Col>
                             </Row>
                         </Container>
+
                         <Container>
-                            <Table striped bordered hover>
+                            <Table responsive="sm">
                                 <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>NAME</th>
-                                    <th>SUMMARY</th>
-                                    <th>AUTHOR</th>
-                                </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NAME</th>
+                                        <th>SUMMARY</th>
+                                        <th>AUTHOR</th>
+                                        <th colSpan={3}>Opções</th>
+                                    </tr>
                                 </thead>
-                                <tbody>
-                                <tr key={items.name}>
-                                    <td>{items.id}</td>
-                                    <td>{items.name}</td>
-                                    <td>{items.summary}</td>
-                                    <td>{items.author}</td>
-                                </tr>
+                                <tbody>{
+                                    this.isBook?
+                                        <tr key={items.name}>
+                                            <td>{items.id}</td>
+                                            <td>{items.name}</td>
+                                            <td>{items.summary}</td>
+                                            <td>{items.author}</td>
+                                      
+                                            <td><Button variant={"primary"} href={`/del/book/${items.id}`} >DELETE</Button></td>
+                                        </tr>
+                                        :
+                                        items.results.map(value =>
+                                            <tr key={value.name}>
+                                                <td>{value.name}</td>
+                                                <td>{value.id}</td>
+                                                <td>{value.summary}</td>
+                                                <td>{value.author}</td>
+                                             
+                                                <td><Button variant={"primary"} href={`/del/book/${value.id}`} >DELETE</Button></td>
+                                            </tr>
+                                        )
+                                }
+
                                 </tbody>
                             </Table>
                         </Container>
+
+                 
                     </div>
                 </div>
             );
         }
     }
 }
-

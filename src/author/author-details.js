@@ -1,12 +1,12 @@
 import React from 'react';
-import {
-    Container,
+import {  Container,
     Row,
     Col,
     Table,
     Navbar,
     Nav,
-    NavDropdown
+    NavDropdown,
+    Button
 } from 'react-bootstrap';
 
 export default class AuthorDetails extends React.Component{
@@ -19,18 +19,25 @@ export default class AuthorDetails extends React.Component{
         };
     }
     componentDidMount() {
+        this.getAuthorDetails();
+
+    }
+
+    getAuthorDetails = () => {        
         let author_id = this.props.match.params.id;
-        let string_name = this.props.match.params.name;
-        let string = '';
-        if (author_id === null){
-            string = `http://localhost:8000/v1/author/?name=${string_name}`;
+        let str_name = this.props.match.params.name;
+        let str = '';
+
+        if (author_id === undefined){
+            str = `http://localhost:8000/v1/author/?name=${str_name}`
         }
         else {
-            string = `http://localhost:8000/v1/author/${author_id}`;
+            str = `http://localhost:8000/v1/author/${author_id}`;
+            this.isAuthor = true;
         }
 
-        fetch(string)
-            .then(res => res.json())
+        fetch(str)
+            .then(response => response.json())
             .then(
                 (result) => {
                     this.setState({
@@ -45,7 +52,9 @@ export default class AuthorDetails extends React.Component{
                     });
                 }
             )
+            .catch(() => { console.log('Error')});
     }
+
 
     render() {
         const { error, isLoaded, items } = this.state;
@@ -62,11 +71,11 @@ export default class AuthorDetails extends React.Component{
                             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                             <Navbar.Collapse id="responsive-navbar-nav">
                                     <Nav className="mr-auto">
-                                        <NavDropdown title="Author" id="nav_author">
-                                        <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
-                                        <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
+                                        <NavDropdown title="BOOK" id="nav_author">
+                                        <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
+                                        <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
                                     </NavDropdown>
-                                    <NavDropdown title="author" id="nav_author">
+                                    <NavDropdown title="AUTHOR" id="nav_author">
                                         <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
                                         <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
                                     </NavDropdown>
@@ -84,22 +93,40 @@ export default class AuthorDetails extends React.Component{
                                 </Col>
                             </Row>
                         </Container>
+
                         <Container>
-                            <Table striped bordered hover>
+                            <Table responsive="sm">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>NAME</th>
+                                        <th>Name</th>
+                                        <th colSpan={3}>Opções</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr key={items.name}>
-                                        <td>{items.id}</td>
-                                        <td>{items.name}</td>
-                                    </tr>
+                                <tbody>{
+                                    this.isAuthor?
+                                        <tr key={items.name}>
+                                            <td>{items.id}</td>
+                                            <td>{items.name}</td>
+                                      
+                                            <td><Button variant={"primary"} href={`/del/author/${items.id}`} >DELETE</Button></td>
+                                        </tr>
+                                        :
+                                        items.results.map(value =>
+                                            <tr key={value.name}>
+                                                <td>{value.name}</td>
+                                                <td>{value.id}</td>
+                                             
+                                                <td><Button variant={"primary"} href={`/del/author/${value.id}`} >DELETE</Button></td>
+                                            </tr>
+                                        )
+                                }
+
                                 </tbody>
                             </Table>
                         </Container>
+
+                 
                     </div>
                 </div>
             );

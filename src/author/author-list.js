@@ -30,8 +30,6 @@ export default class AuthorList extends React.Component{
         `http://localhost:8000/v1/author/?page=${
             this.state.pageNumber}&per_page=${this.state.items}`
         )
-        
-        //.then(res => res.json())
         .then(response => {
 
             console.log('RESPONSE:', response.data.results)

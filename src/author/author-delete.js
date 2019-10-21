@@ -5,6 +5,7 @@ import {Spinner, Container, Navbar, Nav, Row, Col} from 'react-bootstrap'
 
 export default class AuthorDelete extends React.Component{
        render() {
+           
         let author_id = this.props.match.params.id;
 
 

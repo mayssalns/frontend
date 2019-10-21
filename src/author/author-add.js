@@ -26,7 +26,7 @@ export default class AuthorAdd extends React.Component{
             method: 'POST',
             body: data,
         }).then(r => r.json());
-        document.getElementById("Author-form").reset();
+        document.getElementById("author-form").reset();
 
     }
 
@@ -52,7 +52,7 @@ export default class AuthorAdd extends React.Component{
                         </Row>
                     </Container>
                     <Container>
-                        <Form id={"Author-form"} onSubmit={AuthorAdd.handleSubmit}>
+                        <Form id={"author-form"} onSubmit={AuthorAdd.handleSubmit}>
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
                                     <InputGroup.Text >Name</InputGroup.Text>
@@ -65,7 +65,7 @@ export default class AuthorAdd extends React.Component{
                                     aria-describedby="name"
                                 />
                             </InputGroup>
-                            <Button variant={"primary"} type="submit" size="lg" block>Submit</Button>
+                            <Button variant={"primary"} type="submit">Submit</Button>
                         </Form>
                     </Container>
                 </div>
