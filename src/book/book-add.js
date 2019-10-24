@@ -26,24 +26,28 @@ export default class BookAdd extends React.Component {
 
     }
 
-    componentDidMount() {
-        fetch("http://localhost:8000/v1/author/")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result.results
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+    componentDidMount = () => {
+        this.bookAdd()
+    }
 
+    bookAdd = () => {
+        fetch("http://localhost:8000/v1/author/")
+        .then(response => response.json())
+        .then(
+            (result) => {
+                this.setState({
+                    isLoaded: true,
+                    items: result.results
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+        .catch(() => { console.log('Error')});
     }
 
     render() {
@@ -81,9 +85,9 @@ export default class BookAdd extends React.Component {
                                         <InputGroup.Text>Name</InputGroup.Text>
                                     </InputGroup.Prepend>
                                     <FormControl
+                                        autoFocus
                                         name={"name"}
                                         id={"name"}
-                                        placeholder="Book Name"
                                         aria-label="name"
                                         aria-describedby="name"
                                     />
@@ -95,7 +99,6 @@ export default class BookAdd extends React.Component {
                                     <FormControl
                                         name={"summary"}
                                         id={"summary"}
-                                        placeholder="Book summary"
                                         aria-label="name"
                                         aria-describedby="name"
                                     />

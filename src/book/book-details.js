@@ -23,6 +23,7 @@ export default class BookDetails extends React.Component{
 
     }
 
+
     getBookDetails = () => {        
         let book_id = this.props.match.params.id;
         let str_name = this.props.match.params.name;
@@ -54,7 +55,6 @@ export default class BookDetails extends React.Component{
             )
             .catch(() => { console.log('Error')});
     }
-
 
     render() {
         const { error, isLoaded, items } = this.state;

@@ -58,9 +58,9 @@ export default class AuthorAdd extends React.Component{
                                     <InputGroup.Text >Name</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <FormControl
+                                    autoFocus
                                     name={"name"}
                                     id={"name"}
-                                    placeholder="Author Name"
                                     aria-label="name"
                                     aria-describedby="name"
                                 />

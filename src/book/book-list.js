@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col, Navbar, Nav, Button, Table } from 'react-bootstrap';
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
+
  
 
-export default class BookList extends React.Component{
+export default class BookList extends Component{
    constructor (props) {
     super (props);
     this.state = {
@@ -14,15 +15,16 @@ export default class BookList extends React.Component{
       hasMore: true
     }
     this.loadMore = this.loadMore.bind(this);
-
    }
-    
+
+
    componentDidMount() {
     //initial request is sent
     this.loadMore();
+    //update data
     setTimeout(() => this.loadMore(), 4000)
-    // onscroll (() => this.loadMore, true)
    }
+
 
     loadMore = () => {
     axios
@@ -33,7 +35,6 @@ export default class BookList extends React.Component{
         .then(response => {
 
             console.log('RESPONSE:', response.data.results)
-
             this.setState( prevState => {
                 return {
                     ...prevState,
@@ -41,16 +42,13 @@ export default class BookList extends React.Component{
                     listItems: prevState.listItems.concat(response.data.results)
                 }
             })
-
             console.log("RESPONSE: ", this.state)
-
         },
         )
         .catch(() => { console.log('Error')});
-
     };
 
-    
+
   render() {
         return (
             <div>
@@ -81,7 +79,7 @@ export default class BookList extends React.Component{
                                     loadMore={this.loadMore.bind(this)}
                                     hasMore={this.state.hasMoreItems}
                                     loader={<div className="loader"> Loading... </div>}
-                                    useWindow={false}
+                                    useWindow={true}
                                 >
                                     <Table responsive="sm">
                                         <thead>
@@ -101,7 +99,7 @@ export default class BookList extends React.Component{
                                                     <td>{item.name}</td>
                                                     <td>{item.summary}</td>
                                                     <td>{item.author}</td>
-                                                    <td><Button variant={"link"} href={`/book/${item.id}`} size="lg" block>Details</Button></td>
+                                                    <td><Button variant={"link"} href={`/book/${item.id}`}>Details</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

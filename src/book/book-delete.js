@@ -44,7 +44,9 @@ export default class BookDelete extends React.Component{
 
                    <script>
                        {setTimeout(function() {
+                          
                            window.location.href = "/book";
+                           console.log("Success!")
                        }, 3000)}
                    </script>
                    

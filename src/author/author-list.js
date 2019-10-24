@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Row, Col, Navbar, Nav, Button, Table } from 'react-bootstrap';
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
+
  
 
-export default class AuthorList extends React.Component{
+export default class AuthorList extends Component{
    constructor (props) {
     super (props);
     this.state = {
@@ -14,15 +15,16 @@ export default class AuthorList extends React.Component{
       hasMore: true
     }
     this.loadMore = this.loadMore.bind(this);
-
    }
-    
+
+
    componentDidMount() {
     //initial request is sent
     this.loadMore();
+    //update data
     setTimeout(() => this.loadMore(), 4000)
-    // onscroll (() => this.loadMore, true)
    }
+
 
     loadMore = () => {
     axios
@@ -33,7 +35,6 @@ export default class AuthorList extends React.Component{
         .then(response => {
 
             console.log('RESPONSE:', response.data.results)
-
             this.setState( prevState => {
                 return {
                     ...prevState,
@@ -41,16 +42,13 @@ export default class AuthorList extends React.Component{
                     listItems: prevState.listItems.concat(response.data.results)
                 }
             })
-
             console.log("RESPONSE: ", this.state)
-
         },
         )
         .catch(() => { console.log('Error')});
-
     };
 
-    
+
   render() {
         return (
             <div>
@@ -70,7 +68,7 @@ export default class AuthorList extends React.Component{
                         <Container>
                             <Row className={"justify-content-center"}>
                                 <Col  xs={6} md={4}>
-                                <h1>Listing Author</h1>
+                                <h1>Listing Authors</h1>
                                 </Col>
                             </Row>
                         </Container>
@@ -81,7 +79,7 @@ export default class AuthorList extends React.Component{
                                     loadMore={this.loadMore.bind(this)}
                                     hasMore={this.state.hasMoreItems}
                                     loader={<div className="loader"> Loading... </div>}
-                                    useWindow={false}
+                                    useWindow={true}
                                 >
                                     <Table responsive="sm">
                                         <thead>
@@ -97,7 +95,8 @@ export default class AuthorList extends React.Component{
                                                 <tr key={item.id}>
                                                     <td>{item.id}</td>
                                                     <td>{item.name}</td>
-                                                    <td><Button variant={"link"} href={`/author/${item.id}`} size="lg" block>Details</Button></td>
+
+                                                    <td><Button variant={"link"} href={`/author/${item.id}`}>Details</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
