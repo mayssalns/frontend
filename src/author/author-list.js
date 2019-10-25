@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Navbar, Nav, Button, Table } from 'react-bootstrap';
-import axios from "axios";
 import InfiniteScroll from "react-infinite-scroller";
+import {api} from '../services/api';
 
  
 
@@ -9,9 +9,8 @@ export default class AuthorList extends Component{
    constructor (props) {
     super (props);
     this.state = {
-      listItems: [],
+      items: [],
       pageNumber: 1,
-      items: 5,
       hasMore: true
     }
     this.loadMore = this.loadMore.bind(this);
@@ -21,16 +20,21 @@ export default class AuthorList extends Component{
    componentDidMount() {
     //initial request is sent
     this.loadMore();
-    //update data
-    setTimeout(() => this.loadMore(), 4000)
    }
 
+   componentDidUpdate(){
+    //update data
+    this.addEventListenerToContainer()
+   }
 
-    loadMore = () => {
-    axios
-        .get(
-        `http://localhost:8000/v1/author/?page=${
-            this.state.pageNumber}&per_page=${this.state.items}`
+    addEventListenerToContainer() {
+        document.getElementById('author-list')
+        .onmousedown = () => { this.loadMore() }
+    }
+
+    loadMore =  async() => {
+        const response = await api.get(
+            `/v1/author/?page=${this.state.pageNumber}`
         )
         .then(response => {
 
@@ -39,7 +43,7 @@ export default class AuthorList extends Component{
                 return {
                     ...prevState,
                     pageNumber: prevState.pageNumber + 1,
-                    listItems: prevState.listItems.concat(response.data.results)
+                    items: prevState.items.concat(response.data.results)
                 }
             })
             console.log("RESPONSE: ", this.state)
@@ -73,15 +77,9 @@ export default class AuthorList extends Component{
                             </Row>
                         </Container>
 
-                        <Container>
+                        <Container id="author-list">
                             <div style={{height:'600px', overflow:'auto'}}>
-                                <InfiniteScroll
-                                    loadMore={this.loadMore.bind(this)}
-                                    hasMore={this.state.hasMoreItems}
-                                    loader={<div className="loader"> Loading... </div>}
-                                    useWindow={true}
-                                >
-                                    <Table responsive="sm">
+                                    <Table responsive="sm" id="table-list">
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
@@ -90,18 +88,17 @@ export default class AuthorList extends Component{
                                             </tr>
                                         </thead>
 
-                                        <tbody>
-                                            {this.state.listItems.map(item => (
+                                        <tbody id="body-author">
+                                            {this.state.items.map(item => (
                                                 <tr key={item.id}>
                                                     <td>{item.id}</td>
                                                     <td>{item.name}</td>
-
                                                     <td><Button variant={"link"} href={`/author/${item.id}`}>Details</Button></td>
                                                 </tr>
                                             ))}
+                                            
                                         </tbody>
                                     </Table>
-                                </InfiniteScroll>
                             </div>
                         </Container>                
                     </div>

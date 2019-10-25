@@ -1,15 +1,7 @@
-import React from 'react';
-import {  Container,
-    Row,
-    Col,
-    Table,
-    Navbar,
-    Nav,
-    NavDropdown,
-    Button
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import {  Container, Row, Col, Table, Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 
-export default class BookDetails extends React.Component{
+export default class BookDetails extends Component{
     constructor(props) {
         super(props);
         this.state = {

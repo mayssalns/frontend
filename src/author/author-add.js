@@ -1,18 +1,9 @@
-import React from 'react';
-import {
-    Form,
-    Button,
-    InputGroup,
-    FormControl,
-    Container,
-    Row,
-    Col,
-    Nav,
-    Navbar
-} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Form, Button, InputGroup, FormControl, Container, Row, Col, Nav, Navbar } from 'react-bootstrap';
+import { api } from '../services/api';
 
 
-export default class AuthorAdd extends React.Component{
+export default class AuthorAdd extends Component{
     constructor() {
         super();
         AuthorAdd.handleSubmit = AuthorAdd.handleSubmit.bind(this);
@@ -21,11 +12,11 @@ export default class AuthorAdd extends React.Component{
     static handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-
-        fetch('http://localhost:8000/v1/author/', {
-            method: 'POST',
-            body: data,
-        }).then(r => r.json());
+        
+        const response = api.post('/v1/author/', data)
+       .then((ret) => {
+           return ret
+       } );
         document.getElementById("author-form").reset();
 
     }

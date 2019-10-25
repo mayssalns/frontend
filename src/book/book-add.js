@@ -1,5 +1,6 @@
 import React from 'react';
 import {Form, Button, Container,  Row, Col, Nav, Navbar, InputGroup, FormControl, FormGroup} from 'react-bootstrap'
+import { api } from '../services/api';
 
 
 
@@ -9,7 +10,8 @@ export default class BookAdd extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            items: [],
+            pageNumber: 1,
         };
         BookAdd.handleSubmit = BookAdd.handleSubmit.bind(this);
     }
@@ -17,27 +19,55 @@ export default class BookAdd extends React.Component {
     static handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-
-        fetch('http://localhost:8000/v1/book/', {
-            method: 'POST',
-            body: data,
-        }).then(r => r.json());
+        const response = api.post('/v1/book/', data)
+       .then((ret) => {
+           return ret
+     } );
         document.getElementById("book-form").reset();
 
     }
+
+   componentDidUpdate(){
+    //update data
+    this.addEventListenerToContainer()
+   }
+
+    addEventListenerToContainer() {
+        document.getElementById('select-author')
+        .onclick = () => { this.loadMore() }
+    }
+
+    loadMore =  async() => {
+        const response = await api.get(
+            `/v1/author/?page=${this.state.pageNumber}`
+        )
+        .then(response => {
+
+            console.log('RESPONSE:', response.data.results)
+            this.setState( prevState => {
+                return {
+                    ...prevState,
+                    pageNumber: prevState.pageNumber + 1,
+                    items: prevState.items.concat(response.data.results)
+                }
+            })
+            console.log("RESPONSE: ", this.state)
+        },
+        )
+        .catch(() => { console.log('Error')});
+    };
 
     componentDidMount = () => {
         this.bookAdd()
     }
 
-    bookAdd = () => {
-        fetch("http://localhost:8000/v1/author/")
-        .then(response => response.json())
+    bookAdd = async() => {
+        const response = await api.get('/v1/author/')
         .then(
             (result) => {
                 this.setState({
                     isLoaded: true,
-                    items: result.results
+                    items: result.data.results
                 });
             },
             (error) => {
@@ -103,11 +133,11 @@ export default class BookAdd extends React.Component {
                                         aria-describedby="name"
                                     />
                                 </InputGroup>
-                                <FormGroup>
+                                <FormGroup id="book-author">
                                     <InputGroup.Prepend>
                                         <InputGroup.Text style={{flex: 3}}>Authors</InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <select multiple className="form-control" id="author" name="author">
+                                    <select multiple className="form-control" id="select-author" name="author">
                                         {items.map(item => (
                                             <option key={item.id} value={item.id}>{item.name}</option>
                                         ))}
