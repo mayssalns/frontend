@@ -12,6 +12,8 @@ import BookAdd from './book/book-add';
 import BookDelete from './book/book-delete';
 import BookDetails from './book/book-details';
 import AuthorDetails from './author/author-details';
+import AuthorUpdate from './author/author-update';
+import BookUpdate from './book/book-update';
 
 
 
@@ -27,13 +29,15 @@ ReactDOM.render(
             <Route path="/book/:id" exact={true} component={BookDetails} />
             <Route path="/del/book/:id" exact={true} component={BookDelete} />
             <Route path="/book/search/:name" exact={false} component={BookDetails} />
+            <Route path="/update/book/:id" exact={true} component={BookUpdate} />
 
           
             <Route path="/author/search/:name" exact={false} component={AuthorDetails} />
             <Route path="/author" exact={true} component={AuthorList} />
             <Route path="/author/:id" exact={true} component={AuthorDetails} />
             <Route path="/add/author" exact={true} component={AuthorAdd} />
-            <Route path="/del/author/:id" exact={true} component={AuthorDelete} />
+            <Route path="/delele/author/:id" exact={true} component={AuthorDelete} />
+            <Route path="/update/author/:id" exact={true} component={AuthorUpdate} />
 
         </Switch>
     </BrowserRouter>,

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Navbar, Nav, Button, Table } from 'react-bootstrap';
-import InfiniteScroll from "react-infinite-scroller";
 import {api} from '../services/api';
-
- 
 
 export default class AuthorList extends Component{
    constructor (props) {

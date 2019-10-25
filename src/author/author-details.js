@@ -91,8 +91,8 @@ export default class AuthorDetails extends Component{
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th colSpan={3}>Opções</th>
+                                        <th>NAME</th>
+                                        <th colSpan={3}>MORE</th>
                                     </tr>
                                 </thead>
                                 <tbody>{
@@ -100,16 +100,16 @@ export default class AuthorDetails extends Component{
                                         <tr key={items.name}>
                                             <td>{items.id}</td>
                                             <td>{items.name}</td>
-                                      
-                                            <td><Button variant={"primary"} href={`/del/author/${items.id}`} >DELETE</Button></td>
+                                            <td><Button variant={"primary"} href={`/update/author/${items.id}`} >UPDATE</Button></td>
+                                            <td><Button variant={"primary"} href={`/delele/author/${items.id}`} >DELETE</Button></td>
                                         </tr>
                                         :
                                         items.results.map(value =>
                                             <tr key={value.name}>
                                                 <td>{value.name}</td>
                                                 <td>{value.id}</td>
-                                             
-                                                <td><Button variant={"primary"} href={`/del/author/${value.id}`} >DELETE</Button></td>
+                                                <td><Button variant={"primary"} href={`/update/author/${value.id}`} >UPDATE</Button></td>
+                                                <td><Button variant={"primary"} href={`/delele/author/${value.id}`} >DELETE</Button></td>
                                             </tr>
                                         )
                                 }
