@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react'
 import {Form, Button, Container,  Row, Col, Nav, Navbar, InputGroup, FormControl, FormGroup} from 'react-bootstrap'
 import { api } from '../services/api';
 
 
 
-export default class BookAdd extends React.Component {
+export default class BookAdd extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -120,6 +120,7 @@ export default class BookAdd extends React.Component {
                        
                         </Container>
                     </div>
+              
                 </div>
             );
     }

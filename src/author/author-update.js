@@ -14,12 +14,16 @@ export default class AuthorUpdate extends Component{
         let author_id = this.props.match.params.id;
         const data = new FormData(event.target);
         
-        const response = api.put(`/v1/author/${author_id}`, data)
+        const response = api.put(`/v1/author/${author_id}/`, data)
        .then((ret) => {
            return ret
        } );
         document.getElementById("author-form").reset();
 
+    }
+
+    reflesh(){
+        let author_name = this.props.match.params.name        
     }
 
     render() {

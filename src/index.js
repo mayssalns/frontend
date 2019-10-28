@@ -27,9 +27,9 @@ ReactDOM.render(
             <Route path="/book" exact={true} component={BookList} />
             <Route path="/add/book" exact={true} component={BookAdd} />
             <Route path="/book/:id" exact={true} component={BookDetails} />
-            <Route path="/del/book/:id" exact={true} component={BookDelete} />
+            <Route path="/delete/book/:id" exact={true} component={BookDelete} />
             <Route path="/book/search/:name" exact={false} component={BookDetails} />
-            <Route path="/update/book/:id" exact={true} component={BookUpdate} />
+            <Route path="/update/book/:id/" exact={true} component={BookUpdate} />
 
           
             <Route path="/author/search/:name" exact={false} component={AuthorDetails} />
@@ -37,7 +37,7 @@ ReactDOM.render(
             <Route path="/author/:id" exact={true} component={AuthorDetails} />
             <Route path="/add/author" exact={true} component={AuthorAdd} />
             <Route path="/delele/author/:id" exact={true} component={AuthorDelete} />
-            <Route path="/update/author/:id" exact={true} component={AuthorUpdate} />
+            <Route path="/update/author/:id/" exact={true} component={AuthorUpdate} />
 
         </Switch>
     </BrowserRouter>,

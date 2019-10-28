@@ -60,6 +60,7 @@ export default class AuthorAdd extends Component{
                         </Form>
                     </Container>
                 </div>
+              
             </div>
         );
     }

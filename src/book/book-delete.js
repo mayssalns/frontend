@@ -1,17 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {Spinner, Container, Navbar, Nav, Row, Col} from 'react-bootstrap'
+import { api } from '../services/api'
 
-
-
-export default class BookDelete extends React.Component{
+export default class BookDelete extends Component{
        render() {
         let book_id = this.props.match.params.id;
 
-
-        fetch(`http://localhost:8000/v1/book/${book_id}`
-            , {
-                method: 'DELETE'
-            }).then(r => '');
+        api.delete(`/v1/book/${book_id}`)
+        .then(r => '');
            return (
                <div>
                    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -46,7 +42,6 @@ export default class BookDelete extends React.Component{
                        {setTimeout(function() {
                           
                            window.location.href = "/book";
-                           console.log("Success!")
                        }, 3000)}
                    </script>
                    

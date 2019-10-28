@@ -1,20 +1,10 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import {
-  Container,
-  Row,
-  Navbar,
-  Nav,
-  NavDropdown,
-  InputGroup,
-  FormControl,
-  Dropdown,
-  DropdownButton
-} from 'react-bootstrap'
+import React, { Component } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import { Container, Row, Navbar, Nav, NavDropdown, InputGroup, FormControl, Dropdown, DropdownButton } from 'react-bootstrap'
 
 
-export default class App extends React.Component{
+export default class App extends Component{
   constructor(props) {
     super(props);
     this.state = {name: ''};

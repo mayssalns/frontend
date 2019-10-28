@@ -1,18 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {Spinner, Container, Navbar, Nav, Row, Col} from 'react-bootstrap'
+import { api } from '../services/api'
 
 
 
-export default class AuthorDelete extends React.Component{
+export default class AuthorDelete extends Component{
        render() {
            
         let author_id = this.props.match.params.id;
 
-
-        fetch(`http://localhost:8000/v1/author/${author_id}`
-            , {
-                method: 'DELETE'
-            }).then(r => '');
+        api.delete(`/v1/author/${author_id}`)
+        .then(r => '');
            return (
                <div>
                    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">

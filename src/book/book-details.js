@@ -104,8 +104,8 @@ export default class BookDetails extends Component{
                                             <td>{items.name}</td>
                                             <td>{items.summary}</td>
                                             <td>{items.author}</td>
-                                            <td><Button variant={"primary"} href={`/update/book/${items.id}`} >UPDATE</Button></td>
-                                            <td><Button variant={"primary"} href={`/del/book/${items.id}`} >DELETE</Button></td>
+                                            <td><Button variant={"primary"} href={`/update/book/${items.id}/`} >UPDATE</Button></td>
+                                            <td><Button variant={"primary"} href={`/delete/book/${items.id}`} >DELETE</Button></td>
                                         </tr>
                                         :
                                         items.results.map(value =>
@@ -114,8 +114,8 @@ export default class BookDetails extends Component{
                                                 <td>{value.id}</td>
                                                 <td>{value.summary}</td>
                                                 <td>{value.author}</td>
-                                                <td><Button variant={"primary"} href={`/update/book/${value.id}`} >UPDATE</Button></td>
-                                                <td><Button variant={"primary"} href={`/del/book/${value.id}`} >DELETE</Button></td>
+                                                <td><Button variant={"primary"} href={`/update/book/${value.id}/`} >UPDATE</Button></td>
+                                                <td><Button variant={"primary"} href={`/delete/book/${value.id}`} >DELETE</Button></td>
                                             </tr>
                                         )
                                 }

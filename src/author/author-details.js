@@ -100,7 +100,7 @@ export default class AuthorDetails extends Component{
                                         <tr key={items.name}>
                                             <td>{items.id}</td>
                                             <td>{items.name}</td>
-                                            <td><Button variant={"primary"} href={`/update/author/${items.id}`} >UPDATE</Button></td>
+                                            <td><Button variant={"primary"} href={`/update/author/${items.id}/`} >UPDATE</Button></td>
                                             <td><Button variant={"primary"} href={`/delele/author/${items.id}`} >DELETE</Button></td>
                                         </tr>
                                         :
@@ -108,7 +108,7 @@ export default class AuthorDetails extends Component{
                                             <tr key={value.name}>
                                                 <td>{value.name}</td>
                                                 <td>{value.id}</td>
-                                                <td><Button variant={"primary"} href={`/update/author/${value.id}`} >UPDATE</Button></td>
+                                                <td><Button variant={"primary"} href={`/update/author/${value.id}/`} >UPDATE</Button></td>
                                                 <td><Button variant={"primary"} href={`/delele/author/${value.id}`} >DELETE</Button></td>
                                             </tr>
                                         )
