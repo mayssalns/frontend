@@ -15,7 +15,6 @@ export default class BookDetails extends Component{
 
     }
 
-
     getBookDetails = () => {        
         let book_id = this.props.match.params.id;
         let str_name = this.props.match.params.name;
@@ -70,9 +69,7 @@ export default class BookDetails extends Component{
                                     <NavDropdown title="AUTHOR" id="nav_author">
                                         <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
                                         <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
-                                    </NavDropdown>
-                                   
-                                    
+                                    </NavDropdown>   
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>
@@ -97,8 +94,8 @@ export default class BookDetails extends Component{
                                         <th colSpan={3}>Opções</th>
                                     </tr>
                                 </thead>
-                                <tbody>{
-                                    this.isBook?
+                                <tbody>
+                                    {this.isBook?
                                         <tr key={items.name}>
                                             <td>{items.id}</td>
                                             <td>{items.name}</td>
@@ -118,13 +115,10 @@ export default class BookDetails extends Component{
                                                 <td><Button variant={"primary"} href={`/delete/book/${value.id}`} >DELETE</Button></td>
                                             </tr>
                                         )
-                                }
-
+                                    }
                                 </tbody>
                             </Table>
                         </Container>
-
-                 
                     </div>
                 </div>
             );

@@ -13,7 +13,7 @@ export default class AuthorAdd extends Component{
         event.preventDefault();
         const data = new FormData(event.target);
         
-        const response = api.post('/v1/author/', data)
+        api.post('/v1/author/', data)
        .then((ret) => {
            return ret
        } );

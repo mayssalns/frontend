@@ -4,9 +4,20 @@ import { api } from '../services/api';
 
 
 export default class AuthorUpdate extends Component{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            authorName: ''
+        };
         AuthorUpdate.handleSubmit = AuthorUpdate.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.getAuthorDetails = this.getAuthorDetails.bind(this);
+    }
+
+
+    componentDidMount() {
+        this.getAuthorDetails();
+
     }
 
     static handleSubmit(event) {
@@ -14,17 +25,45 @@ export default class AuthorUpdate extends Component{
         let author_id = this.props.match.params.id;
         const data = new FormData(event.target);
         
-        const response = api.put(`/v1/author/${author_id}/`, data)
-       .then((ret) => {
+        api.put(`/v1/author/${author_id}/`, data)
+        .then((ret) => {
            return ret
-       } );
+        } );
         document.getElementById("author-form").reset();
 
     }
+    
 
-    reflesh(){
-        let author_name = this.props.match.params.name        
+    handleChange(event) {
+        this.setState({
+            authorName: event.target.value
+        });
     }
+  
+
+    getAuthorDetails = async() => {        
+        let author_id = this.props.match.params.id
+
+        await api.get(`/v1/author/${author_id}`)
+        .then(
+            response => {
+                this.setState({
+                    isLoaded: true,
+                    authorName: response.data.name
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+        .catch(() => { console.log('Error')});
+
+        console.log('AUTHOR NAME GET>>>>>>>>>>>', this.state.authorName)
+    }
+
 
     render() {
         return (
@@ -48,7 +87,7 @@ export default class AuthorUpdate extends Component{
                         </Row>
                     </Container>
                     <Container>
-                        <Form id={"author-form"} onSubmit={AuthorUpdate.handleSubmit}>
+                        <Form id={"author-form"} onSubmit={AuthorUpdate.handleSubmit } >
                             <InputGroup className="mb-3">
                                 <InputGroup.Prepend>
                                     <InputGroup.Text >Name</InputGroup.Text>
@@ -59,7 +98,10 @@ export default class AuthorUpdate extends Component{
                                     id={"name"}
                                     aria-label="name"
                                     aria-describedby="name"
+                                    value= {this.state.authorName}
+                                    onChange={this.handleChange.bind(this)}
                                 />
+                
                             </InputGroup>
                             <Button variant={"primary"} type="submit">Submit</Button>
                         </Form>

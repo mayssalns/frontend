@@ -17,7 +17,7 @@ export default class BookAdd extends Component {
     static handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        const response = api.post('/v1/book/', data)
+        api.post('/v1/book/', data)
        .then((ret) => {
            return ret
      } );
@@ -40,7 +40,7 @@ export default class BookAdd extends Component {
     }
 
     loadMoreAuthors =  async() => {
-        const response = await api.get(
+        await api.get(
             `/v1/author/?page=${this.state.page}`
         )
         .then(response => {
@@ -57,42 +57,40 @@ export default class BookAdd extends Component {
     };
 
     render() {
-
-            return (
-                <div>
-                    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        return (
+            <div>
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                         <Navbar.Brand href="/">HOME</Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="mr-auto">
                                 <Nav.Link href="/book">BOOKs</Nav.Link>
                                 <Nav.Link href="/author">AUTHOR</Nav.Link>
-                               
                             </Nav>
                         </Navbar.Collapse>
-                    </Navbar>
-                    <div>
-                        <Container>
+                </Navbar>
+                <div>
+                    <Container>
                             <Row className={"justify-content-center"}>
                                 <Col xs={6} md={4}>
                                    <h1>Book Insertion</h1>
                                 </Col>
                             </Row>
-                        </Container>
-                        <Container>
+                    </Container>
+                    <Container>
                         <Form id={"book-form"} onSubmit={BookAdd.handleSubmit}>
-                                <InputGroup className="mb-3">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text>Name</InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl
-                                        autoFocus
-                                        name={"name"}
-                                        id={"name"}
-                                        aria-label="name"
-                                        aria-describedby="name"
-                                    />
-                                </InputGroup>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text>Name</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <FormControl
+                                    autoFocus
+                                    name={"name"}
+                                    id={"name"}
+                                    aria-label="name"
+                                    aria-describedby="name"
+                                />
+                            </InputGroup>
                                 <InputGroup className="mb-3">
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>Summary</InputGroup.Text>
@@ -115,14 +113,11 @@ export default class BookAdd extends Component {
                                     </select>
                                 </FormGroup>
                                 <Button variant={"primary"} type="submit">Submit</Button>
-                            </Form>
-
-                       
+                        </Form>
                         </Container>
-                    </div>
-              
-                </div>
-            );
+                </div>                            
+            </div>
+        );
     }
 }
 

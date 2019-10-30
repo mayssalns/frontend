@@ -5,13 +5,15 @@ import { Container, Row, Navbar, Nav, NavDropdown, InputGroup, FormControl, Drop
 
 
 export default class App extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {name: ''};
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: ''
+        };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
   handleChange = event => {
     this.setState({name: event.target.value});
@@ -24,7 +26,6 @@ export default class App extends Component{
 
 
   render() {
-
     return (
         <div>
           <div>
@@ -35,11 +36,11 @@ export default class App extends Component{
                 <Nav className="mr-auto">
                   <NavDropdown title="BOOK" id="nav_book">
                     <NavDropdown.Item href="/add/book">Insert</NavDropdown.Item>
-                    <NavDropdown.Item href="/book">Listing</NavDropdown.Item>
+                    <NavDropdown.Item href="/book">List</NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown title="AUTHOR" id="nav_author">
                     <NavDropdown.Item href="/add/author">Insert</NavDropdown.Item>
-                    <NavDropdown.Item href="/author">Listing</NavDropdown.Item>
+                    <NavDropdown.Item href="/author">List</NavDropdown.Item>
                 </NavDropdown>
                 </Nav>
               </Navbar.Collapse>

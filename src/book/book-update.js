@@ -9,8 +9,28 @@ export default class BookUpdate extends Component{
         this.state = {
             items: [],
             page: 1,
+            name: '',
+            summary:'',
+            author: '',
+
         };
         BookUpdate.handleSubmit = BookUpdate.handleSubmit.bind(this);
+        this.handleChangeName = this.handleChangeName.bind(this);
+        this.handleChangeSummary = this.handleChangeSummary.bind(this);
+        this.handleChangeAuthor = this.handleChangeAuthor.bind(this);
+        this.getBookDetails = this.getBookDetails.bind(this);
+
+    }
+
+    componentDidMount() {
+        this.getBookDetails();
+        this.loadMoreAuthors()
+
+    }
+    
+    componentDidUpdate(){
+        //update data
+        this.addEventListenerToContainer()
     }
 
     static handleSubmit(event) {
@@ -18,28 +38,16 @@ export default class BookUpdate extends Component{
         let book_id = this.props.match.params.id;
         const data = new FormData(event.target);
         
-        const response = api.put(`/v1/book/${book_id}/`, data)
+        api.put(`/v1/book/${book_id}/`, data)
        .then((ret) => {
            return ret
        } );
         document.getElementById("book-form").reset();
 
     }
-    
-    reflesh(){
-        let name = this.props.match.params.name   
-        let summary = this.props.match.params.summary  
-        let author = this.props.match.params.author    
-    }
 
-    componentDidMount(){
-        this.loadMoreAuthors()
-    }
 
-    componentDidUpdate(){
-     //update data
-     this.addEventListenerToContainer()
-    }
+   
 
     addEventListenerToContainer() {
         document.getElementById('select-author')
@@ -47,7 +55,7 @@ export default class BookUpdate extends Component{
     }
 
     loadMoreAuthors =  async() => {
-        const response = await api.get(
+        await api.get(
             `/v1/author/?page=${this.state.page}`
         )
         .then(response => {
@@ -64,8 +72,51 @@ export default class BookUpdate extends Component{
     };
 
 
+    handleChangeName(event) {
+        this.setState({
+            name: event.target.value
+        });
+    }
+    handleChangeSummary(event) {
+        this.setState({
+            summary: event.target.value
+        });
+    }
+
+    handleChangeAuthor(event) {
+        this.setState({
+            author: event.target.value
+        });
+    }
+  
+
+    getBookDetails = async() => {        
+        let book_id = this.props.match.params.id
+
+        await api.get(`/v1/book/${book_id}`)
+        .then(
+            response => {
+                this.setState({
+                    isLoaded: true,
+                    name: response.data.name,
+                    summary: response.data.summary,
+                    author: response.data.summary
+                });
+            },
+            (error) => {
+                this.setState({
+                    isLoaded: true,
+                    error
+                });
+            }
+        )
+        .catch(() => { console.log('Error')});
+    }
+
+
 
     render() {
+        console.log('AUTHOR NAME GET>>>>>>>>>>>', this.state)
             return (
                 <div>
                     <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -99,6 +150,8 @@ export default class BookUpdate extends Component{
                                         id={"name"}
                                         aria-label="name"
                                         aria-describedby="name"
+                                        value= {this.state.name}
+                                        onChange={this.handleChangeName.bind(this)}
                                     />
                                 </InputGroup>
                                 <InputGroup className="mb-3">
@@ -110,6 +163,8 @@ export default class BookUpdate extends Component{
                                         id={"summary"}
                                         aria-label="name"
                                         aria-describedby="name"
+                                        value= {this.state.summary}
+                                        onChange={this.handleChangeSummary.bind(this)}
                                     />
                                 </InputGroup>
                                 <FormGroup id="book-author">

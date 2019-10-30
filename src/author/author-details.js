@@ -95,8 +95,8 @@ export default class AuthorDetails extends Component{
                                         <th colSpan={3}>MORE</th>
                                     </tr>
                                 </thead>
-                                <tbody>{
-                                    this.isAuthor?
+                                <tbody>
+                                    {this.isAuthor?
                                         <tr key={items.name}>
                                             <td>{items.id}</td>
                                             <td>{items.name}</td>
@@ -112,13 +112,10 @@ export default class AuthorDetails extends Component{
                                                 <td><Button variant={"primary"} href={`/delele/author/${value.id}`} >DELETE</Button></td>
                                             </tr>
                                         )
-                                }
-
+                                    }
                                 </tbody>
                             </Table>
-                        </Container>
-
-                 
+                        </Container>               
                     </div>
                 </div>
             );
